@@ -1,20 +1,19 @@
 # scripts/extract.py
 
-import requests
 import os
+import requests
+import pandas as pd
+from config.logger_config import logger
 
-def download_csv(url, save_path):
-    response = requests.get(url)
-    
-    if response.status_code == 200:
-        with open(save_path, 'wb') as f:
+def download_csv(url: str, download_path: str) -> str:
+    logger.info("Starting download from URL...")
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        with open(download_path, 'wb') as f:
             f.write(response.content)
-        print(f"[✓] File downloaded to: {save_path}")
-    else:
-        print(f"[✗] Failed to download file. Status code: {response.status_code}")
-
-# Quick test
-if __name__ == "__main__":
-    test_url = "https://people.sc.fsu.edu/~jburkardt/data/csv/airtravel.csv"
-    os.makedirs("data", exist_ok=True)
-    download_csv(test_url, "data/raw_data.csv")
+        logger.info(f"✅ CSV downloaded to {download_path}")
+        return download_path
+    except Exception as e:
+        logger.error(f"❌ Failed to download CSV: {e}")
+        raise

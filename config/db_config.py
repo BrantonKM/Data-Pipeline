@@ -1,9 +1,14 @@
 # config/db_config.py
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # Load from .env
+
 DB_CONFIG = {
-    'host': 'localhost',
-    'port': 5432,
-    'user': 'postgres',
-    'password':'Kalekye1222',
-    'database': 'data_pipeline'
+    'host': os.getenv("DB_HOST"),
+    'port': os.getenv("DB_PORT"),
+    'dbname': os.getenv("DB_NAME"),
+    'user': os.getenv("DB_USER"),
+    'password': os.getenv("DB_PASSWORD")
 }

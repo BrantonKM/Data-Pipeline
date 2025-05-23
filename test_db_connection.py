@@ -4,14 +4,8 @@ import psycopg2
 from config.db_config import DB_CONFIG
 
 try:
-    connection = psycopg2.connect(
-        host=DB_CONFIG['host'],
-        port=DB_CONFIG['port'],
-        user=DB_CONFIG['user'],
-        password=DB_CONFIG['password'],
-        database=DB_CONFIG['database']
-    )
+    conn = psycopg2.connect(**DB_CONFIG)
     print("✅ Successfully connected to the database.")
-    connection.close()
+    conn.close()
 except Exception as e:
-    print(f"❌ Failed to connect to the database: {e}")
+    print(f"❌ Connection failed: {e}")
