@@ -1,5 +1,6 @@
 # requirements.txt
 pandas
-psycopg2-binary
+psycopg2
 sqlalchemy
 requests
+flask
