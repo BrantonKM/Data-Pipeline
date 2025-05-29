@@ -1,14 +1,48 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Air Travel Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>Air Travel Data</h1>
-    <div class="table-container">
-        {{ table | safe }}
-    </div>
+    <header class="header">
+        <h1>🛫 Air Travel Dashboard</h1>
+        <nav class="navbar">
+            <a href="{{ url_for('main.index') }}">Home</a>
+            <a href="{{ url_for('main.forecast') }}">Forecast</a>
+            <a href="{{ url_for('main.download') }}">Download Report</a>
+        </nav>
+    </header>
+
+    <main class="main">
+        <canvas id="passengerChart" width="800" height="400"></canvas>
+    </main>
+
+    <script>
+        const ctx = document.getElementById('passengerChart').getContext('2d');
+        const passengerChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ labels | tojson }},
+                datasets: [{
+                    label: 'Passengers',
+                    data: {{ values | tojson }},
+                    backgroundColor: 'rgba(0, 123, 255, 0.6)',
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { title: { display: true, text: 'Month' }},
+                    y: { title: { display: true, text: 'Passengers' }}
+                }
+            }
+        });
+    </script>
 </body>
 </html>

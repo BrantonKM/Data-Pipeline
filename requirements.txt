@@ -1,6 +1,5 @@
-# requirements.txt
-pandas
-psycopg2
-sqlalchemy
-requests
 flask
+pandas
+python-dotenv
+sqlalchemy
+psycopg2-binary

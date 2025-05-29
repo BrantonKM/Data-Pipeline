@@ -1,34 +1,58 @@
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 40px;
-    background-color: #f4f4f4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #f7f9fc;
     color: #333;
 }
 
-h1 {
-    color: #444;
+.header {
+    background-image: url('../static/images/safari_background.jpg'); /* or PNG */
+    background-size: contain;  /* ✅ This ensures full image is visible */
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 2rem;
     text-align: center;
-}
-
-.table-container {
-    margin-top: 20px;
-    overflow-x: auto;
-}
-
-table.data {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-}
-
-table.data th,
-table.data td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-
-table.data th {
-    background-color: #009879;
+    position: relative;
     color: white;
+    height: 300px;  /* ✅ Explicit height helps preserve full image aspect */
 }
+
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar a:hover {
+    background-color: #0056b3;
+}
+
+
+@keyframes moveAnimal {
+    0% { left: -100px; }
+    100% { left: 100%; }
+}
+
+.main {
+    padding: 2rem;
+    text-align: center;
+}
+@media (max-width: 768px) {
+    .header {
+        height: auto;
+        background-size: contain;
+    }
+}
+

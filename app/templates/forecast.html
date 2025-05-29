@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Passenger Forecast</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header class="header">
+        <h1>📈 Passenger Forecast</h1>
+        <nav class="navbar">
+            <a href="{{ url_for('main.index') }}">Home</a>
+            <a href="{{ url_for('main.forecast') }}">Forecast</a>
+            <a href="{{ url_for('main.download') }}">Download Report</a>
+        </nav>
+        <img src="{{ url_for('static', filename='images/elephant.png') }}" class="animal" style="top: 50px;">
+        <img src="{{ url_for('static', filename='images/bird.png') }}" class="animal" style="top: 100px;">
+    </header>
+
+    <main class="main">
+        <canvas id="forecastChart" width="800" height="400"></canvas>
+    </main>
+
+    <script>
+        const ctx = document.getElementById('forecastChart').getContext('2d');
+        const forecastChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ labels | tojson }},
+                datasets: [
+                    {
+                        label: 'Actual Passengers',
+                        data: {{ actual | tojson }},
+                        borderColor: 'blue',
+                        fill: false
+                    },
+                    {
+                        label: 'Forecasted Passengers',
+                        data: {{ predicted | tojson }},
+                        borderColor: 'orange',
+                        borderDash: [5, 5],
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { title: { display: true, text: 'Month' } },
+                    y: { title: { display: true, text: 'Passengers' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

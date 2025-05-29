@@ -1,24 +1,28 @@
-# run_pipeline.py
+import logging
+from config import LOG_FILE
+from scripts.extract import extract_data
+from scripts.transform import transform_airtravel_data
+from scripts.load import load_data
 
-from scripts.extract import download_csv
-from scripts.transform import clean_data
-from scripts.load import load_to_postgres
-from config.logger_config import logger
+# Setup logging
+logging.basicConfig(filename=LOG_FILE, level=logging.INFO,
+                    format="%(asctime)s:%(levelname)s:%(message)s")
 
-def main():
-    logger.info("🚀 Starting Data Pipeline")
+try:
+    logging.info("🚀 Starting pipeline...")
+    print("📥 Extracting data...")
+    raw_df = extract_data()
+    
+    print("🔧 Transforming data...")
+    clean_df = transform_airtravel_data(raw_df)
+    print("✅ Transformed DataFrame preview:")
+    print(clean_df.head())
 
-    url = "https://people.sc.fsu.edu/~jburkardt/data/csv/airtravel.csv"
-    csv_path = "data/airtravel.csv"
-    table_name = "airtravel_data"
+    print("💾 Loading data...")
+    load_data(clean_df, table_name="airtravel_data")
+    logging.info("✅ Pipeline executed successfully.")
+    print("✅ Pipeline executed successfully.")
 
-    try:
-        downloaded = download_csv(url, csv_path)
-        cleaned = clean_data(downloaded)
-        load_to_postgres(cleaned, table_name)
-        logger.info("✅ Pipeline finished successfully.")
-    except Exception as e:
-        logger.error(f"❌ Pipeline failed: {e}")
-
-if __name__ == "__main__":
-    main()
+except Exception as e:
+    logging.error("❌ Pipeline execution failed.", exc_info=True)
+    print(f"❌ Pipeline execution failed. Reason: {e}")

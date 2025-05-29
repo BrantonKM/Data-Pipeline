@@ -1,19 +1,12 @@
-# scripts/extract.py
-
-import os
-import requests
 import pandas as pd
-from config.logger_config import logger
+import logging
+from config import DATA_FILE
 
-def download_csv(url: str, download_path: str) -> str:
-    logger.info("Starting download from URL...")
+def extract_data(file_path=DATA_FILE):
     try:
-        response = requests.get(url)
-        response.raise_for_status()
-        with open(download_path, 'wb') as f:
-            f.write(response.content)
-        logger.info(f"✅ CSV downloaded to {download_path}")
-        return download_path
+        df = pd.read_csv(file_path)
+        logging.info("Data extracted successfully.")
+        return df
     except Exception as e:
-        logger.error(f"❌ Failed to download CSV: {e}")
+        logging.error(f"Failed to extract data: {e}")
         raise

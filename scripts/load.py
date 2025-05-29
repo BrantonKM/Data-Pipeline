@@ -1,33 +1,15 @@
-# scripts/load.py
+import pandas as pd
+from sqlalchemy import create_engine
+import logging
+from config import DB_CONFIG
 
-import psycopg2
-from config.db_config import DB_CONFIG
-from config.logger_config import logger
-
-def load_to_postgres(df, table_name: str):
-    logger.info(f"Loading data into table `{table_name}`...")
+def load_data(df, table_name="airtravel_data"):
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
-        cursor = conn.cursor()
-        # Optional: drop and recreate table for dev/testing
-        cursor.execute(f"DROP TABLE IF EXISTS {table_name};")
-        cursor.execute(f"""
-            CREATE TABLE {table_name} (
-                month TEXT,
-                "1958" INT,
-                "1959" INT,
-                "1960" INT
-            );
-        """)
-        for _, row in df.iterrows():
-            cursor.execute(f"""
-                INSERT INTO {table_name} (month, "1958", "1959", "1960")
-                VALUES (%s, %s, %s, %s)
-            """, tuple(row))
-        conn.commit()
-        logger.info("✅ Data loaded into PostgreSQL.")
+        db_url = f"postgresql://{DB_CONFIG['user']}:{DB_CONFIG['password']}@" \
+                 f"{DB_CONFIG['host']}:{DB_CONFIG['port']}/{DB_CONFIG['database']}"
+        engine = create_engine(db_url)
+        df.to_sql(table_name, engine, if_exists='replace', index=False)
+        logging.info("Data loaded successfully.")
     except Exception as e:
-        logger.error(f"❌ Failed to load data: {e}")
-    finally:
-        cursor.close()
-        conn.close()
+        logging.error(f"Failed to load data: {e}")
+        raise
