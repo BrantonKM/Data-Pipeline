@@ -8,14 +8,14 @@ body {
 
 .header {
     background-image: url('../static/images/safari_background.jpg'); /* or PNG */
-    background-size: contain;  /* ✅ This ensures full image is visible */
+    background-size: contain;  /* This ensures full image is visible */
     background-repeat: no-repeat;
     background-position: center;
     padding: 2rem;
     text-align: center;
     position: relative;
     color: white;
-    height: 300px;  /* ✅ Explicit height helps preserve full image aspect */
+    height: 300px;  /*  Explicit height helps preserve full image aspect */
 }
 
 
