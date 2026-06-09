@@ -9,20 +9,20 @@ logging.basicConfig(filename=LOG_FILE, level=logging.INFO,
                     format="%(asctime)s:%(levelname)s:%(message)s")
 
 try:
-    logging.info("🚀 Starting pipeline...")
-    print("📥 Extracting data...")
+    logging.info(" Starting pipeline...")
+    print("Extracting data...")
     raw_df = extract_data()
     
-    print("🔧 Transforming data...")
+    print("Transforming data...")
     clean_df = transform_airtravel_data(raw_df)
-    print("✅ Transformed DataFrame preview:")
+    print(" Transformed DataFrame preview:")
     print(clean_df.head())
 
-    print("💾 Loading data...")
+    print(" Loading data...")
     load_data(clean_df, table_name="airtravel_data")
-    logging.info("✅ Pipeline executed successfully.")
-    print("✅ Pipeline executed successfully.")
+    logging.info("Pipeline executed successfully.")
+    print(" Pipeline executed successfully.")
 
 except Exception as e:
-    logging.error("❌ Pipeline execution failed.", exc_info=True)
-    print(f"❌ Pipeline execution failed. Reason: {e}")
+    logging.error("Pipeline execution failed.", exc_info=True)
+    print(f" Pipeline execution failed. Reason: {e}")
