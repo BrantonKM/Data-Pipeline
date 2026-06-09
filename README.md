@@ -1,5 +1,5 @@
 # Data-Pipeline
-# 📁 Project Structure (summary)
+# Project Structure (summary)
 #
 # - run_pipeline.py           -> Executes ETL pipeline
 # - run_flask.py              -> Launches the Flask dashboard
