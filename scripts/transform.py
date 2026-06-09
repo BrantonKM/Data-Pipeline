@@ -18,6 +18,6 @@ def transform_airtravel_data(df):
 
     # Save to CSV
     df_melted.to_csv('transformed_airtravel.csv', index=False)
-    print("✅ Transformed data saved to transformed_airtravel.csv")
+    print(" Transformed data saved to transformed_airtravel.csv")
 
     return df_melted
